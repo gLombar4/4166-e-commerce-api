@@ -13,3 +13,75 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  ADMIN
+  USER
+  SELLER
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  name       String
+  email      String     @unique
+  password   String
+  role       Role       @default(USER)
+  created_at DateTime   @default(now())
+
+  // Relations
+  orders     Order[]    @relation("UserOrders")   // orders placed by the user
+  products   Product[]  @relation("UserProducts") // products sold by the seller
+}
+
+model Product {
+  id           Int        @id @default(autoincrement())
+  name         String
+  description  String?
+  price        Float
+  stock        Int
+  created_at   DateTime   @default(now())
+
+  // Seller relation
+  seller_id    Int
+  seller       User       @relation("UserProducts", fields: [seller_id], references: [id])
+
+  // Category relation (each product must belong to one category)
+  category_id  Int
+  category     Category   @relation(fields: [category_id], references: [id])
+
+  // Order items
+  orderItems   OrderItem[]
+}
+
+model Category {
+  id         Int        @id @default(autoincrement())
+  name       String     @unique
+  products   Product[]  // each category can have many products
+}
+
+model Order {
+  id         Int        @id @default(autoincrement())
+  created_at DateTime   @default(now())
+  total      Float
+
+  // Buyer relation (required)
+  user_id    Int
+  user       User       @relation("UserOrders", fields: [user_id], references: [id])
+
+  // Items in the order
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id          Int       @id @default(autoincrement())
+  quantity    Int
+  unit_price  Float
+  subtotal    Float
+
+  // Foreign keys
+  order_id    Int
+  product_id  Int
+
+  order       Order     @relation(fields: [order_id], references: [id])
+  product     Product   @relation(fields: [product_id], references: [id])
+}
