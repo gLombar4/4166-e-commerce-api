@@ -16,7 +16,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use(express.json());
 
-app.use('api/products', productRoutes);
+app.use('/api/products', productRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
