@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 
+import productRoutes from "./routes/productRoutes.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
