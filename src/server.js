@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('api/products', productRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
