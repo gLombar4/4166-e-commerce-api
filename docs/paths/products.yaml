@@ -1,5 +1,5 @@
 get:
-  summary: get all products
+  summary: Get all products
   tags:
     - Products
   responses:
@@ -12,7 +12,7 @@ get:
             items:
               $ref: ../components/schemas/Product.yaml
 post:
-  summary: create a new product
+  summary: Create a new product
   tags:
    - Products
   requestBody:
