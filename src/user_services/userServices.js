@@ -6,7 +6,7 @@ export async function getAllUsers(currentUser) {
     err.status = 401;
     throw err;
   }
-  if (currentUser.role !== 'admin') {
+  if (currentUser.role !== 'ADMIN') {
     const err = new Error(
       'Access denied. Only admin can view all user accounts',
     );
@@ -34,7 +34,7 @@ export async function getUserById(id, currentUser) {
     err.status = 404;
     throw err;
   }
-  if (currentUser.role !== 'admin' && currentUser.id !== user.id) {
+  if (currentUser.role !== 'ADMIN' && currentUser.id !== user.id) {
     const err = new Error('You are not authorized to view this account');
     err.status = 403;
     throw err;
@@ -66,7 +66,7 @@ export async function updateUser(id, data, currentUser) {
     throw err;
   }
 
-  if (currentUser.role !== 'admin' && currentUser.id !== Number(id)) {
+  if (currentUser.role !== 'ADMIN' && currentUser.id !== Number(id)) {
     const err = new Error('You are not authorized to update this account');
     err.status = 403;
     throw err;
@@ -88,7 +88,7 @@ export async function deleteUser(id, currentUser) {
     err.status = 401;
     throw err;
   }
-  if (currentUser.role !== 'admin' && currentUser.id !== Number(id)) {
+  if (currentUser.role !== 'ADMIN' && currentUser.id !== Number(id)) {
     const err = new Error('You are not authorized to delete this account');
     err.status = 403;
     throw err;
@@ -111,7 +111,7 @@ export async function updateUserRole(id, newRole, currentUser) {
     err.status = 401;
     throw err;
   }
-  if (currentUser.role !== 'admin') {
+  if (currentUser.role !== 'ADMIN') {
     const err = new Error('You are not authorized to update this account');
     err.status = 403;
     throw err;
