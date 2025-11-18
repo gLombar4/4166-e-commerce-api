@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "prisma.pinToPrisma6": true
+=======
+    "postman.settings.dotenv-detection-notification-visibility": false
+>>>>>>> 2b5440b (First docs split)
 }
