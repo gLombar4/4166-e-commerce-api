@@ -1,42 +1,14 @@
 import * as userRepo from '../user_repo/userRepo.js';
 
-export async function getAllUsers(currentUser) {
-  if (!currentUser) {
-    const err = new Error('Authentication required');
-    err.status = 401;
-    throw err;
-  }
-  if (currentUser.role !== 'ADMIN') {
-    const err = new Error(
-      'Access denied. Only admin can view all user accounts',
-    );
-    err.status = 403;
-    throw err;
-  }
+export async function getAllUsers() {
   return await userRepo.getAllUsers();
 }
 
-export async function getUserById(id, currentUser) {
-  if (!currentUser) {
-    const err = new Error('Authentication required');
-    err.status = 401;
-    throw err;
-  }
-  if (isNaN(id) || id <= 0) {
-    const err = new Error('User ID must be a positive integer');
-    err.status = 400;
-    throw err;
-  }
-
+export async function getUserById(id) {
   const user = await userRepo.getUserById(id);
   if (!user) {
     const err = new Error(`Cannot find user with id: ${id}`);
     err.status = 404;
-    throw err;
-  }
-  if (currentUser.role !== 'ADMIN' && currentUser.id !== user.id) {
-    const err = new Error('You are not authorized to view this account');
-    err.status = 403;
     throw err;
   }
   return user;
@@ -59,19 +31,7 @@ export async function createUser(data) {
   return await userRepo.createUser({ name, email, password, role });
 }
 
-export async function updateUser(id, data, currentUser) {
-  if (!currentUser) {
-    const err = new Error('Authentication required');
-    err.status = 401;
-    throw err;
-  }
-
-  if (currentUser.role !== 'ADMIN' && currentUser.id !== Number(id)) {
-    const err = new Error('You are not authorized to update this account');
-    err.status = 403;
-    throw err;
-  }
-
+export async function updateUser(id, data) {
   const user = await userRepo.getUserById(id);
   if (!user) {
     const err = new Error(`Cannot find user with id: ${id}`);
@@ -82,18 +42,7 @@ export async function updateUser(id, data, currentUser) {
   return updated;
 }
 
-export async function deleteUser(id, currentUser) {
-  if (!currentUser) {
-    const err = new Error('Authentication required');
-    err.status = 401;
-    throw err;
-  }
-  if (currentUser.role !== 'ADMIN' && currentUser.id !== Number(id)) {
-    const err = new Error('You are not authorized to delete this account');
-    err.status = 403;
-    throw err;
-  }
-
+export async function deleteUser(id) {
   const deleted = await userRepo.removeUser(id);
   if (!deleted) {
     const err = new Error(`Cannot find user with id: ${id}`);
@@ -105,18 +54,7 @@ export async function deleteUser(id, currentUser) {
   };
 }
 
-export async function updateUserRole(id, newRole, currentUser) {
-  if (!currentUser) {
-    const err = new Error('Authentication required');
-    err.status = 401;
-    throw err;
-  }
-  if (currentUser.role !== 'ADMIN') {
-    const err = new Error('You are not authorized to update this account');
-    err.status = 403;
-    throw err;
-  }
-
+export async function updateUserRole(id, newRole) {
   const user = await userRepo.getUserById(id);
   if (!user) {
     const err = new Error(`Cannot find user with id: ${id}`);
