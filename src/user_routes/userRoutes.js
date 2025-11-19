@@ -5,10 +5,16 @@ import {
   validateUserUpdate,
 } from '../middleware/userValidators.js';
 import { authenticate } from '../middleware/authenticate.js';
+import { authorizeRoles } from '../middleware/authorizeRoles.js';
 
 const router = express.Router();
 
-router.get('/', authenticate, userController.getAllUsersHandler);
+router.get(
+  '/',
+  authenticate,
+  authorizeRoles('ADMIN'),
+  userController.getAllUsersHandler,
+);
 
 router.get('/:id', authenticate, userController.getUserByIdHandler);
 
@@ -23,6 +29,11 @@ router.put(
 
 router.delete('/:id', authenticate, userController.deleteUserHandler);
 
-router.patch('/:id', authenticate, userController.updateUserRoleHandler);
+router.patch(
+  '/:id',
+  authenticate,
+  authorizeRoles('ADMIN'),
+  userController.updateUserRoleHandler,
+);
 
 export default router;
