@@ -11,7 +11,7 @@ export async function getAllUsersHandler(req, res) {
 
 export async function getUserByIdHandler(req, res) {
   try {
-    const user = await userServices.getUserById(Number(req.user.id), req.user);
+    const user = await userServices.getUserById(Number(req.user.id));
     res.status(200).json(user);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
@@ -32,7 +32,6 @@ export async function updateUserHandler(req, res) {
     const updatedUser = await userServices.updateUser(
       Number(req.user.id),
       req.body,
-      req.user,
     );
     res.status(200).json(updatedUser);
   } catch (error) {
@@ -45,7 +44,6 @@ export async function updateUserRoleHandler(req, res) {
     const updatedUserRole = await userServices.updateUserRole(
       Number(req.user.id),
       req.body.role,
-      req.user,
     );
     res.status(200).json(updatedUserRole);
   } catch (error) {
@@ -55,7 +53,7 @@ export async function updateUserRoleHandler(req, res) {
 
 export async function deleteUserHandler(req, res) {
   try {
-    const result = await userServices.deleteUser(Number(req.user.id), req.user);
+    const result = await userServices.deleteUser(Number(req.user.id));
     res.status(200).json(result);
   } catch (error) {
     res.status(error.status || 500).json({ error: error.message });
