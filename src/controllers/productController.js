@@ -24,15 +24,15 @@ export async function createProductHandler(req, res) {
     const data = {
         name: req.body.name,
         description: req.body.description,
-        price: req.body.price,
-        stock: req.body.stock,
+        price: parseFloat(req.body.price),
+        stock: parseInt(req.body.stock),
         /**
          * The seller id should be the id of the currently
-         * logged in user.
+         * logged in user. (req.user.id)
          * current data is placeholder.
          */
         seller_id: req.body.seller_id,
-        category_id: req.body.category_id,
+        category_id: parseInt(req.body.category_id),
     };
     let newProduct = await createProduct(data);
     res.status(201).json(newProduct);

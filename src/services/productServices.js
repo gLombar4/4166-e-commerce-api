@@ -15,7 +15,7 @@ export async function getProductById(id) {
     let result = await getById(id);
     if (result) return result;
     else {
-        const error = new Error(`Cannot find post with id: ${id}`);
+        const error = new Error(`Cannot find product with id: ${id}`);
         error.status = 404;
         throw error;
     }

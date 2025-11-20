@@ -67,3 +67,26 @@ export async function remove(id){
         throw error;
     };
 };
+
+export async function categoryExists(search) {
+    let id = parseInt(search);
+    const result = await prisma.category.findUnique({
+        where: { id }
+    });
+    if (result) {
+        return true;
+    }
+    return false;
+};
+
+export async function productListedBySeller(sellerId, productName) {
+    let seller_id = parseInt(sellerId);
+    let name = productName;
+    const result = await prisma.product.findMany({
+        where: {
+            name,
+            seller_id
+        }
+    });
+    return result.length > 0;
+}
