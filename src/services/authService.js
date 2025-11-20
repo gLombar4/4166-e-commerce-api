@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { createUser, findUserByEmail } from '../respositories/userRepo.js';
+import { createUser, getUserByEmail } from '../repositories/userRepo.js';
 import { Prisma } from '../generated/prisma/index.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -25,7 +25,7 @@ export async function signUp(email, password) {
 }
 
 export async function logIn(email, password) {
-    const user = await findUserByEmail(email);
+    const user = await getUserByEmail(email);
 
     if (!user) {
         const error = new Error('Invalid credentials');
