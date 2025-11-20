@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
