@@ -1,4 +1,4 @@
-import * as userRepo from '../user_repo/userRepo.js';
+import * as userRepo from '../repositories/userRepo.js';
 
 export async function getAllUsers() {
   return await userRepo.getAllUsers();
