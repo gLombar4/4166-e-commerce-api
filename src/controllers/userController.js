@@ -1,4 +1,4 @@
-import * as userServices from '../user_services/userServices.js';
+import * as userServices from '../services/userServices.js';
 
 export async function getAllUsersHandler(req, res) {
   try {

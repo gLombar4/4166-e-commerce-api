@@ -1,5 +1,5 @@
 import express from 'express';
-import * as userController from '../user_controllers/userController.js';
+import * as userController from '../controllers/userController.js';
 import {
   validateUser,
   validateUserUpdate,
