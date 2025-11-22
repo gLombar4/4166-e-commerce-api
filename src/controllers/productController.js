@@ -9,8 +9,30 @@ import {
 
 
 export async function getAllProductsHandler(req, res) {
-    
-    let result = await getAllProducts();
+    const {
+        id,
+        name,
+        price,
+        sellerId,
+        categoryId,
+        sortBy = 'id',
+        sortOrder = 'asc',
+        limit = 10,
+        offset = 0
+    } = req.query;
+
+    const filter = {};
+    if (id) filter.id = parseInt(id);
+    if (name) filter.name = name;
+    if (price) filter.price = price;
+    if (sellerId) filter.sellerId = sellerId;
+    if (categoryId) filter.categoryId = categoryId;
+    filter.sortBy = sortBy;
+    filter.sortOrder = sortOrder;
+    filter.limit = parseInt(limit);
+    filter.offset = parseInt(offset);
+
+    let result = await getAllProducts(filter);
     res.status(200).json(result);
 
 };

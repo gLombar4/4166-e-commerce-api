@@ -1,7 +1,15 @@
 import prisma from "../config/db.js";
 import { getUserById } from "../services/userServices.js";
 
-export async function getAll() {
+export async function getAll(filter) {
+
+    const conditions = {};
+    if (filter.id) conditions.id = filter.id;
+    if (filter.name) conditions.name = filter.name;
+    if (filter.price) conditions.price = filter.price;
+    if (filter.sellerId) conditions.sellerId = filter.sellerId;
+    if (filter.categoryId) conditions.categoryId = filter.categoryId;
+    
     const products = await prisma.product.findMany({
         select: {
             id: true,

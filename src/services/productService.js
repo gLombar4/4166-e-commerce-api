@@ -8,8 +8,8 @@ import {
 
 } from "../repositories/productRepo.js"
 
-export async function getAllProducts() {
-    return await getAll();
+export async function getAllProducts(filter) {
+    return await getAll(filter);
 };
 
 export async function getProductById(id) {
