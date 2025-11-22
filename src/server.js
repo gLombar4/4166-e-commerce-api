@@ -20,7 +20,6 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use(express.json());
 
-app.use('/api/products',productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('api/products', productRoutes);
