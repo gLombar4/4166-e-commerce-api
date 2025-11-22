@@ -21,7 +21,13 @@ router.get(
 router.get('/:id', authenticate, userController.getUserByIdHandler);
 
 //Create user
-router.post('/', validateUser, userController.createUserHandler);
+router.post(
+  '/',
+  authenticate,
+  validateUser,
+  authorizeRoles('ADMIN'),
+  userController.createUserHandler,
+);
 
 //Update user - authenticated users (ADMIN or owner)
 router.put(
