@@ -6,7 +6,7 @@ import {
 } from '../middleware/userValidators.js';
 import { authenticate } from '../middleware/authenticate.js';
 import { authorizeRoles } from '../middleware/authorizeRoles.js';
-import { authorizeAdminOrSelf } from '../middleware/authorizeAdminOrSelf.js';
+import { authorizeUserOwnership } from '../middleware/authorizeOwnership.js';
 
 const router = express.Router();
 
@@ -19,9 +19,14 @@ router.get(
 );
 
 //Get user by Id - authenticated users (ADMIN or owner)
-router.get('/:id', authenticate, userController.getUserByIdHandler);
+router.get(
+  '/:id',
+  authenticate,
+  authorizeUserOwnership,
+  userController.getUserByIdHandler,
+);
 
-//Create user
+//Create user - ADMIN only
 router.post(
   '/',
   authenticate,
@@ -34,12 +39,18 @@ router.post(
 router.put(
   '/:id',
   authenticate,
+  authorizeUserOwnership,
   validateUserUpdate,
   userController.updateUserHandler,
 );
 
 //Delete user - authenticated users (ADMIN or owner)
-router.delete('/:id', authenticate, userController.deleteUserHandler);
+router.delete(
+  '/:id',
+  authenticate,
+  authorizeUserOwnership,
+  userController.deleteUserHandler,
+);
 
 //Update user roles - only ADMIN allowed
 router.patch(
