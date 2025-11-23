@@ -5,7 +5,7 @@ export async function getAllOrders() {
   return orderRepo.findAll();
 }
 
-export function getOrderById(id) {
+export async function getOrderById(id) {
   return orderRepo.findById(id);
 }
 

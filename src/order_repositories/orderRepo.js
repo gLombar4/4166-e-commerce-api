@@ -8,12 +8,11 @@ export async function findAll() {
   });
 }
 
+
 export async function findById(id) {
   return prisma.order.findUnique({
     where: { id },
-    include: {
-      orderItems: true,
-    }
+    include: { orderItems: true }
   });
 }
 

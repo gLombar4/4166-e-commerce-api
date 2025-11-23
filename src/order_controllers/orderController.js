@@ -9,22 +9,31 @@ export async function getOrders(req, res, next) {
   }
 }
 
+
 export async function getOrderById(req, res, next) {
   try {
-    const id = parseInt(req.params.id, 10);
-
-    const order = await orderServices.getOrderById(id);
+    const orderId = parseInt(req.params.id, 10);
+    const order = await orderServices.getOrderById(orderId);
 
     if (!order) {
-      return res.status(404).json({ error: `order with id ${id} does not exist` });
+      return res.status(404).json({ error: "Order not found" });
     }
 
-    return res.status(200).json(order);
+   
+    if (req.user.role !== 'admin' && order.user_id !== req.user.id) {
+      return res.status(403).json({ error: "User not allowed to view other users’ orders." });
+    }
+
+    res.status(200).json({
+      id: order.id,
+      user_id: order.user_id,
+      created_at: order.created_at,
+      orderItems: order.orderItems
+    });
   } catch (err) {
     next(err);
   }
 }
-
 
 export async function createOrder(req, res, next) {
   try {
