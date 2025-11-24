@@ -1,0 +1,12 @@
+type: object
+properties:
+  productId:
+    type: integer
+  quantity:
+    type: integer
+  unitPrice:
+    type: number
+    format: float
+  subtotal:
+    type: number
+    format: float
