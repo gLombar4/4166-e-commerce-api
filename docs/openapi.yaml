@@ -6,15 +6,22 @@ servers:
   - url: http://localhost:3000/api
 tags:
   - name: Products
-    description: product-related endpoints
+    description: Product-related endpoints
+  - name: Orders
+    description: Order-related endpoints
   - name: Categories
     description: category-related endpoints
   - name: Users
     description: user-related endpoints
 paths:
   /products:
-    $ref: paths/products.yaml
+    $ref: './paths/products.yaml'
   /products/{id}:
+    $ref: './paths/products{id}.yaml'
+  /orders:
+    $ref: './paths/orders.yaml'
+  /orders/{id}:
+    $ref: './paths/orders{id}.yaml'
     $ref: paths/products{id}.yaml
   /categories:
     $ref: paths/categories.yaml

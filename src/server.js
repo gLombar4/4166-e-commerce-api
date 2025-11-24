@@ -12,6 +12,7 @@ import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 
 app.use(morgan('tiny'));
@@ -26,6 +27,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
+
+
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

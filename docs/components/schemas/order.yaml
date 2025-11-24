@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: integer
+  total:
+    type: number
+    format: float
+  orderItems:
+    type: array
+    items:
+      $ref: './OrderItem.yaml'
