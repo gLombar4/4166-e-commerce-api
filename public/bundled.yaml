@@ -53,13 +53,17 @@ paths:
                   example: 1
       responses:
         '201':
-          '400':
-            $ref: ../components/responses/BadRequest.yaml
           description: Product created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotLoggedIn'
+        '403':
+          $ref: '#/components/responses/NoPermission'
   /products/{id}:
     get:
       summary: Get a product by its ID number
@@ -79,9 +83,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -119,15 +121,19 @@ paths:
                   example: 1
       responses:
         '200':
-          '400':
-            $ref: ../components/responses/BadRequest.yaml
-          '404':
-            $ref: ../components/responses/NotFound.yaml
           description: Product updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotLoggedIn'
+        '403':
+          $ref: '#/components/responses/NoPermission'
+        '404':
+          $ref: '#/components/responses/NotFound'
     delete:
       summary: Delete a product by its ID number
       tags:
@@ -149,6 +155,10 @@ paths:
                 type: object
         '400':
           $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotFound'
+        '403':
+          $ref: '#/components/responses/NoPermission'
         '404':
           $ref: '#/components/responses/NotFound'
 components:
@@ -191,6 +201,18 @@ components:
           type: array
           items:
             type: String
+    NotAuthenticated:
+      type: object
+      properties:
+        error:
+          type: String
+          example: Not authenticated
+    NotAuthorized:
+      type: object
+      properties:
+        error:
+          type: String
+          example: Insufficient Permission
     NotFoundError:
       type: object
       properties:
@@ -204,6 +226,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
+    NotLoggedIn:
+      description: Not Authenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthenticated'
+    NoPermission:
+      description: Insufficient Permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotAuthorized'
     NotFound:
       description: Task not found
       content:
